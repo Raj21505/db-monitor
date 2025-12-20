@@ -1,0 +1,167 @@
+/* static/script.js */
+
+/* --- CORE VARIABLES & RESET --- */
+:root {
+    --bg-color: #0d1a2c;
+    --card-bg: #1e3650;
+    --text-main: #e0f2ff;
+    --text-dim: #94a3b8;
+    --accent-blue: #00bcd4; /* Quiet / Low */
+    --accent-green: #4caf50; /* Moderate Noise */
+    --accent-yellow: #ff9800; /* High Risk (Loud) */
+    --accent-red: #f44336; /* EXTREME DANGER */
+    --glow-blue: 0 0 15px rgba(0, 188, 212, 0.5);
+    --glow-red: 0 0 10px rgba(244, 67, 54, 0.6);
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    margin: 0;
+    padding-top: 50px;
+    background-image: radial-gradient(circle at top, #1e3650 0%, var(--bg-color) 70%);
+}
+
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--text-main);
+    text-shadow: var(--glow-blue);
+    margin-bottom: 40px;
+}
+
+/* --- DASHBOARD LAYOUT --- */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    width: 80%;
+    max-width: 900px;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 2px solid rgba(0, 188, 212, 0.2);
+    text-align: center;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    color: var(--accent-blue);
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* --- CIRCULAR METER (dB) --- */
+.circular-meter {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    background: #2a4768;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+}
+
+#gauge-arc {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    /* Color segments adjusted for the 0-120 dBA scale */
+    background: conic-gradient(
+        var(--accent-blue) 0%, 
+        var(--accent-green) 50%, 
+        var(--accent-yellow) 70%, 
+        var(--accent-red) 85%
+    );
+    transition: transform 0.2s ease-out; 
+    transform: rotate(0deg); 
+}
+
+#gauge-mask {
+    content: '';
+    position: absolute;
+    top: 15px; left: 15px; right: 15px; bottom: 15px;
+    background: var(--card-bg);
+    border-radius: 50%;
+    z-index: 2;
+}
+
+#current-db-display {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3.5rem;
+    color: var(--accent-blue);
+    z-index: 3;
+    text-shadow: var(--glow-blue);
+}
+
+.status-text {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+}
+
+/* --- NOISE HEALTH SCALE (Linear Bar) --- */
+#health-scale-track {
+    height: 15px;
+    background: #2a4768;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+#health-scale-fill {
+    height: 100%;
+    width: 0%;
+    transition: width 0.2s ease-out;
+    background: var(--accent-green);
+}
+
+.scale-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin-bottom: 25px;
+}
+
+.category-text {
+    font-weight: bold;
+    color: var(--accent-blue);
+    margin-top: 10px;
+}
+
+/* --- HIGHEST SOUND MEASURED --- */
+#highest-db-value {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 4rem;
+    color: var(--accent-red); 
+    margin-top: 15px;
+    text-shadow: var(--glow-red);
+}
+
+.highest-db-label {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+}
+
+/* --- HISTORICAL GRAPH CANVAS --- */
+#noiseGraph {
+    width: 100%;
+    height: 150px;
+    background: #14283d;
+    border-radius: 8px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+}
