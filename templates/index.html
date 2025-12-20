@@ -1,0 +1,52 @@
+<!---templates/index.html--->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Noise Level Monitor (dBA)</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Smart Noise Level Monitor (dBA)</h1>
+    
+    <div class="dashboard-grid">
+        <div class="card">
+            <div class="card-title">Real-Time dBA Meter</div>
+            <div class="circular-meter">
+                <div id="gauge-arc"></div>
+                <div id="gauge-mask"></div>
+                <div id="current-db-display">0</div>
+            </div>
+            <div class="status-text" id="status-text">Status: Initializing...</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Noise Health Scale</div>
+            
+            <div id="health-scale-track">
+                <div id="health-scale-fill"></div>
+            </div>
+            
+            <div class="scale-info">
+                <span id="health-scale-text"></span>
+            </div>
+            
+            <div class="category-text" id="category-text">Category: Initializing...</div>
+
+            <div id="highest-db-value">0</div>
+            <div class="highest-db-label">Highest Sound Measured (dBA)</div>
+        </div>
+    </div>
+    
+    <div class="card" style="grid-column: 1 / span 2; margin-top: 30px; padding: 15px;">
+        <div class="card-title" id="graph-title">Historical Data (Last 30 Seconds)</div>
+        <canvas id="noiseGraph"></canvas>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
